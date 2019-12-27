@@ -2,8 +2,11 @@
 import os
 import time
 import random
+import sys
 
-MODULE_PATH = os.path.abspath('.')
+# dirname:get parent directory
+# sys.argv[0] getFileName
+CASE_PATH = os.path.abspath(os.path.dirname(sys.argv[0]))
 PATHSEP = os.sep
 LINESEQ = os.linesep
 

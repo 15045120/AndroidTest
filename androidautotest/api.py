@@ -4,9 +4,9 @@ import os
 import sys
 import traceback
 from enum import Enum
-from androidautotest.tool import *
-from androidautotest.logger import Logger
-from androidautotest.errors import *
+from .tool import *
+from .logger import Logger
+from .errors import *
 
 # auto install dependency
 try:
@@ -44,10 +44,6 @@ match template: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutor
 class ASM:
     ZOOM_SIZE = 50
 
-# case file name(like 'case001')
-index_start = MODULE_PATH.rfind(PATHSEP)
-case_name = MODULE_PATH[index_start+1:-4]
-
 # android Device class
 class Device:
     serial_number_list = []
@@ -74,17 +70,20 @@ class Device:
         # return the first device object in the device list if user not use 'switch_device' to switch device
         cls.current_device = cls.device_list[0]
         cls.current_serial_number = cls.serial_number_list[0]
-
+        
     @classmethod
     def switchDevice(cls,serial_number):
         if serial_number not in cls.serial_number_list:
             raise NoDeviceError(r'there is no android device named %s connect with PC' % serial_number)
         index = cls.serial_number_list.index(serial_number)
         cls.current_device = cls.device_list[index]
-        cls.current_serial_number = cls.serial_number_list[0]
-
+        cls.current_serial_number = cls.serial_number_list[index]
+        
 # device
 Device.initDeviceList()
+
+if not sys.argv[0].endswith('__main__.py'):
+    logger = Logger()
 
 # template picture class
 class Template:
@@ -92,17 +91,14 @@ class Template:
         self.name = name.replace('\\',PATHSEP)
 
     def getPath(self):
-        return path_join(MODULE_PATH, self.name)
+        return path_join(CASE_PATH, self.name)
 
     def getName(self):
         return self.name
 
-# logger
-logger = Logger(case_name)
-
 def assert_exists(template_pic, threshold=0.9, device=None, timeout=10):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     logger.info(r"[androidtest] assert_exists('%s')" % template_pic.getName())
@@ -122,7 +118,7 @@ def assert_exists(template_pic, threshold=0.9, device=None, timeout=10):
 
 def assert_not_exists(template_pic, threshold=0.9, device=None, timeout=10):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     logger.info(r"[androidtest] assert_not_exists('%s')" % template_pic.getName())
@@ -142,7 +138,7 @@ def assert_not_exists(template_pic, threshold=0.9, device=None, timeout=10):
     
 def exists(template_pic, threshold=0.9, device=None, timeout=10):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     logger.info(r"[androidtest] exists('%s')" % template_pic.getName())
@@ -159,7 +155,7 @@ def exists(template_pic, threshold=0.9, device=None, timeout=10):
 
 def touch_point(point, device=None):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     logger.info(r"[androidtest] touch(%d, %d)" % (point[0],point[1]))
@@ -169,7 +165,7 @@ def touch_point(point, device=None):
 
 def touch(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     # python is not support method override, use type judge 
@@ -201,7 +197,7 @@ def touch(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
 
 def long_touch(template_pic, threshold=0.9, device=None, delay=0.8, timeout=10):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     # python is not support method override, use type judge 
@@ -229,7 +225,7 @@ def long_touch(template_pic, threshold=0.9, device=None, delay=0.8, timeout=10):
 
 def touch_if(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     logger.info(r"[androidtest] touch_if('%s')" % template_pic.getName())
@@ -253,7 +249,7 @@ def touch_if(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
 
 def touch_in(template_pic, target_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     logger.info(r"[androidtest] touch_in('%s', '%s')" % (template_pic.getName(), target_pic.getName()))
@@ -371,7 +367,7 @@ DIR_RIGHT = Direction.DIR_RIGHT
 
 def flick(start, direction, step=1, device=None):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     logger.info(r'[androidtest] flick(%s, %s)' % (str(start), direction.name))
@@ -410,7 +406,7 @@ def flick(start, direction, step=1, device=None):
 
 def swipe(start, end, device=None):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     logger.info(r'[androidtest] swipe(%s, %s)' % (str(start), str(end)))
@@ -434,7 +430,7 @@ POWER = KeyCode.POWER
 
 def keyevent(keycode, device=None):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     logger.info(r'[androidtest] keyevent(%s)' % keycode.name)
@@ -444,7 +440,7 @@ def keyevent(keycode, device=None):
 
 def text(input, device=None):
     if device is None:
-        switch_device(Device.current_serial_number)
+        Device.switchDevice(Device.current_serial_number)
     else:
         switch_device(device)
     logger.info(r"[androidtest] text('%s')" % input)
@@ -457,6 +453,7 @@ def sleep(delay):
     time.sleep(delay)
 
 def switch_device(serial_number):
+    logger.info(r'[androidtest] switch_device(%s)' % serial_number)
     return Device.switchDevice(serial_number)
 
 def end():

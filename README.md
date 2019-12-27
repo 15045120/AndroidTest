@@ -12,25 +12,25 @@ Basic thought is using ADB (Android Debug Bridge) to send command to Android tes
  - Simple to use:
 ```bash
 java -jar asm.jar
-``` 
+```
  - Then adjust zoom to 50%, you also can set to other size, but need to add some code in your case source file after your create your case file:
 ```python
 # if adjust asm zoom to 25% 
 ASM.ZOOM_SIZE = 25
-``` 
+```
 3.Install androidautotest
 ```bash
 pip install androidautotest 
-``` 
+```
 4.If you cannot install dependency of androidautotest using 'pip install androidautotest', you can use [tools\install.py](https://github.com/15045120/AndroidTest/blob/master/tools/install.py)
 ```bash
 python install.py
-``` 
+```
  5.Use [tools\newCase.py](https://github.com/15045120/AndroidTest/blob/master/tools/newCase.py) to create a new case to start your test task with Android Phone.
 
 ```bash
 python newCase.py <caseName> <savePath>
-``` 
+```
 ## Documentation
 You can find the complete AndroidTest API documentation on  [readthedocs](http://androidtest.readthedocs.io/).
 ## Examples
@@ -63,17 +63,31 @@ end()
 ```
 Once you finish your code writing, you can run your case(for example: you create a case named 'case001'):
 ```bash
-cd case001.air
-python case001.py
-``` 
+python -m androidautotest -h
+
+usage: androidautotest [-r|--run] <case_path> [-d|--device] <device_serial_number> [-t|--times] <run_times>
+
+A framework to run test case
+
+optional arguments:
+  -V, --version         Print version and exit
+  -h, --help            Print this help message and exit
+
+cmdlines options:
+  -c <case_path>, --case <case_path>
+                        Case path to run
+  -d <device_serial_number>, --device <device_serial_number>
+                        Device to switch
+  -t <run_times>, --times <run_times>
+                        Times of case running
+```
+For example, run case001 with Android Phone which's serial number is 'HMKNW17421063974' for 10 times, you can write as follow.
+```bash
+python -m androidautotest --case=E:\AndroidTest\workspace\case001.air --device=HMKNW17421063974 --times=10
+```
 And there are three log files you can use to analyze your test plan after run your case.
-
- - case001.air\case001.log.20191222010717_540637\log_case001_20191222010717_540637.txt
- - case001.air\case001.log.20191222010717_540637\serial_log_case001_20191222010717_540637.txt
- - case001.air\case001.log.20191222010717_540637\report_case001_20191222010717_540637.html
- -----------
-
- - log_case001_XXX: all log output
- - serial_log_case001_XXX: adb log output
- - serial_log_case001_XXX: report of case run
- 
+|  file_name| remark |directory|
+|--|--|--|
+| log_case001_XXX.txt  |  all log output| case001.air\case001.log.20191222010717_540637\|
+|serial_log_case001_XXX.txt |  adb log output|case001.air\case001.log.20191222010717_540637\|
+| report_case001_XXX.html|   report of case run|case001.air\case001.log.20191222010717_540637\|
