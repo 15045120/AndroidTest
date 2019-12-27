@@ -87,17 +87,18 @@ class Logger:
 					else:# linux
 						matchObj = json.loads(log[33:])
 					html_file.write('<div style="box-shadow: 0px 0px 5px #888888;">')
-					html_file.write('<div>target:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="%s"></img></div>' % matchObj['template'])
-					html_file.write('<div style="margin-top:10px;">screencap: <img src="%s"></img></div>' % matchObj['screencap'])
+					html_file.write('<div style="padding-left:20px;font-weight:blod;">Target:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="%s"></img></div>' % matchObj['template'])
+					html_file.write('<div style="margin-top:10px;padding-left:20px;font-weight:blod;">Screencap: <img src="%s"></img></div>' % matchObj['screencap'])
 					if matchObj['exists'] == 'True':
-						html_file.write('<div style="margin-top:10px;">confidence: %s</div>' % matchObj['confidence'])
-						html_file.write('<div style="background: #e7f2fa;height:40px;line-height:40px;padding-left:20px;margin-top:10px;">Target picture is in screen</div>')
+						html_file.write('<div style="margin-top:10px;padding-left:20px;font-weight:blod;">Confidence: %s</div>' % confidence_precent(matchObj['confidence']))
+						html_file.write('<div style="background: #e7f2fa;height:40px;line-height:40px;padding-left:20px;margin-top:10px;font-weight:blod;">Target picture is in screen</div>')
 					else:
-						html_file.write('<div style="background: #e7f2fa;height:40px;line-height:40px;padding-left:20px;margin-top:10px;">Target picture is not in screen</div>')
+						html_file.write('<div style="background: #e7f2fa;height:40px;line-height:40px;padding-left:20px;margin-top:10px;font-weight:blod;">Target picture is not in screen</div>')
 					html_file.write('</div>')
 			elif log.find(r'[error]') != -1:
 				steps[-1]['status'] = 'error'
-				html_file.write('<div style="background: #eeffcc;box-shadow: 0px 0px 5px #888888; height:200px;padding-left:20px;">%s</div>' % log[30:])
+				print(log[30:])
+				html_file.write('<div style="background: #eeffcc;box-shadow: 0px 0px 5px #888888; height:200px;padding-left:20px;"><pre>%s</pre></div>' % log[30:])
 			html_file.write('</div>')
 		# navigation
 		html_file.write('<div style="position:fixed;display: flex;flex-direction: row;bottom:20px;z-index:10000;right:10px;background:#e9ecef;border-radius:5px;padding:10px;">')
