@@ -1,6 +1,16 @@
 ========================
 Android Test API
 ========================
+
+>>> switch_device(device)
+
+:description:
+  switch to the Android Phone by serial-number
+:device:
+  The serial-number of Android Phone(adb devices).
+
+------------
+
 >>> assert_exists(template_pic, threshold=0.9, device='serial-number', timeout=10)
 
 :description:
@@ -173,9 +183,11 @@ Android Test API
 :delay:
   Sleep time.
 
->>> end()
-
 ------------
+
+>>> end()
 
 :description:
   to end runing case in your case
+
+

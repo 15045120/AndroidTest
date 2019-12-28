@@ -9,12 +9,12 @@ def print_version():
     print('androidautotest {}{}'.format(VERSION, LINESEQ))
     
 def print_usage():
-    print('androidautotest [-r|--run] <case_path> [-d|--device] <device_serial_number> [-t|--times] <run_times>')
+    print('androidautotest [-c|--case] <case_path> [-d|--device] <device_serial_number> [-t|--times] <run_times>')
     
 def main():
     parser = argparse.ArgumentParser(
         prog='androidautotest',
-        usage='androidautotest [-r|--run] <case_path> [-d|--device] <device_serial_number> [-t|--times] <run_times>',
+        usage='androidautotest [-c|--case] <case_path> [-d|--device] <device_serial_number> [-t|--times] <run_times>',
         description='A framework to run test case',
         add_help=False,
     )
@@ -42,6 +42,10 @@ def main():
     )
     args = parser.parse_args()
     
+    if not args.help and not args.version and not args.case and not args.device and not args.times:
+        print_version()
+        parser.print_help()
+        sys.exit()
     if args.help:
         print_version()
         parser.print_help()

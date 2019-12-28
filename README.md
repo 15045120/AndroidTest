@@ -86,8 +86,8 @@ For example, run case001 with Android Phone which's serial number is 'HMKNW17421
 python -m androidautotest --case=E:\AndroidTest\workspace\case001.air --device=HMKNW17421063974 --times=10
 ```
 And there are three log files you can use to analyze your test plan after run your case.
-|  file_name| remark |directory|
-|--|--|--|
-| log_case001_XXX.txt  |  all log output| case001.air\case001.log.20191222010717_540637\|
-|serial_log_case001_XXX.txt |  adb log output|case001.air\case001.log.20191222010717_540637\|
-| report_case001_XXX.html|   report of case run|case001.air\case001.log.20191222010717_540637\|
+
+In case001.air\log\case001.log.20191222010717_540637\:
+ - log_case001_XXX.txt:all log output
+ - serial_log_case001_XXX.txt:adb log output
+ - adb log output:report of case run

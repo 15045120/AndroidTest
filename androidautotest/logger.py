@@ -14,7 +14,7 @@ class Logger:
     serial_file_path = ''
     start_time = ''
     is_start = False
-    log_list = []
+    log_info_list = []
     
     def __init__(self):
         # case file name(like 'case001')
@@ -26,7 +26,7 @@ class Logger:
         # generate log file name
         time_log, time_str, random_str = random_id()
         # create log dir
-        log_dir = r'%s%s%s.log.%s_%s' % (CASE_PATH, PATHSEP, case_name, time_str, random_str)
+        log_dir = r'%s%slog%s%s.log.%s_%s' % (CASE_PATH, PATHSEP, PATHSEP, case_name, time_str, random_str)
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
         self.log_dir = log_dir
@@ -51,7 +51,7 @@ class Logger:
         log_file.write(line_join(time_log, msg))
         log_file.close()
         if msg.startswith('[androidtest]') or msg.startswith('[matching]'):
-            self.log_list.append(line_join(time_log, msg))
+            self.log_info_list.append(line_join(time_log, msg))
         elif msg.startswith('[adb]'):
             serial_file = open(self.serial_file_path, mode='a+')
             serial_file.write(line_join(time_log, msg))
@@ -66,20 +66,29 @@ class Logger:
         time_log, time_str, random_str = random_id()
         log_file.write(line_join(time_log, msg))
         log_file.close()
-        self.log_list.append(line_join(time_log, msg))
-        self.end(status='error')
+        self.log_info_list.append(line_join(time_log, msg))
+        self.end(status='fail')
     
-    def end(self, status='normal'):
+    def end(self, status='pass'):
         # start log if first time
         if not self.is_start:
             self.start()
-        log_list = self.log_list
+        self.write_html_file(status)
+        print(r'case %s end...' % self.case_name)
+        print(r'------------------------------------------------------------')
+        
+        #open browser
+        webbrowser.open_new_tab(self.html_file_path)
+        sys.exit(0)
+        
+    def write_html_file(self, status):
+        log_info_list = self.log_info_list
         # time consuming
         consuming_time = time.time() - self.start_time
         html_file = open(self.html_file_path, mode='a+')
         html_file.write('<meta http-equiv="Content-Type" content="text/html;charset=utf-8">')
         html_file.write('<body style="width:80%;margin-left:10%;">')
-        if status == 'normal':
+        if status == 'pass':
             html_file.write(r'<div id="top" style="background: #ffffff;padding-left:20px;box-shadow: 0px 0px 10px #888888;border-radius:5px;height:80px;font-size:20px;">')
             html_file.write(r'<p>Test Case %s: <span style="color:green;font-weight:blod;">Pass</span></p>' % self.case_name)
             html_file.write(r'<p>Time consuming: <span style="color:red;">%ds</span><p></div>' % consuming_time)
@@ -91,14 +100,14 @@ class Logger:
             html_file.write(r'</div>')
         steps = []
         count = 0
-        for i, log in enumerate(log_list):
+        for i, log in enumerate(log_info_list):
             html_file.write('<div>')
             if log.find(r'[androidtest]') != -1:
                 count = count + 1
                 html_file.write('<div id="step%d" style="background: #6ab0de;box-shadow: 0px 0px 5px #888888; margin-top:20px;color:#ffffff;height:40px;line-height:40px;font-size:18px;padding-left:20px;">[Step%d] %s</div>' % (count, count, log.replace(r'[androidtest]', '')))
                 steps.append({'step':count,'status':'success'})
             elif log.find(r'[matching]') != -1:
-                if (i < len(log_list)-1 and log_list[i+1].find(r'[androidtest]') != -1) or i == len(log_list)-1:
+                if (i < len(log_info_list)-1 and log_info_list[i+1].find(r'[androidtest]') != -1) or i == len(log_info_list)-1:
                     matchObj = {}
                     # window
                     if PATHSEP == '\\':
@@ -131,8 +140,3 @@ class Logger:
         html_file.write('</body>')
         html_file.write('</html>')
         html_file.close()
-        print(r'case %s end...' % self.case_name)
-        print(r'------------------------------------------------------------')
-        # open browser
-        webbrowser.open_new_tab(self.html_file_path)
-        sys.exit(0)

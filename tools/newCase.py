@@ -11,9 +11,13 @@ else:
 	# <caseName>.air
 	case_dir = r'%s\%s.air' % (sys.argv[2], case_name)
 	
+	# <caseName>.air\log
+	case_log_dir = r'%s\%s.air\log' % (sys.argv[2], case_name)
+	
 	# <caseName>.air\pic
 	case_pic_dir = r'%s\%s.air\pic' % (sys.argv[2], case_name)
-	if not os.path.exists(case_pic_dir):
+	if not os.path.exists(case_dir):
+		os.makedirs(case_log_dir)
 		os.makedirs(case_pic_dir)
 		# <caseName>.air\<caseName.py>
 		case_file_path = r'%s\%s.air\%s.py' % (sys.argv[2], case_name, case_name)
