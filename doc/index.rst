@@ -11,7 +11,7 @@ Android Test API
 
 ------------
 
->>> assert_exists(template_pic, threshold=0.9, device='serial-number', timeout=10)
+>>> assert_exists(template_pic, threshold=0.9, device=None, timeout=10)
 
 :description:
  throw a Error if template picture is not in current screen of Android Phone
@@ -26,7 +26,7 @@ Android Test API
 
 ------------
 
->>> assert_not_exists(template_pic, threshold=0.9, device='serial-number', timeout=10)
+>>> assert_not_exists(template_pic, threshold=0.9, device=None, timeout=10)
 
 :description:
  throw a Error if template picture is in current screen of Android Phone
@@ -41,7 +41,7 @@ Android Test API
 
 ------------
 
->>> exists(template_pic, threshold=0.9, device='serial-number', timeout=10)
+>>> exists(template_pic, threshold=0.9, device=None, timeout=10)
 
 :description:
   return True is template picture is in current screen of Android Phone, else return Flase
@@ -56,7 +56,7 @@ Android Test API
 
 ------------
 
->>> touch(template_pic, threshold=0.9, device='serial-number', delay=0.4, timeout=10)
+>>> touch(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10)
 
 :description:
   touch template picture,throw a Error if template picture is not in current screen of Android Phone
@@ -73,7 +73,7 @@ Android Test API
 
 ------------
 
->>> touch_if(template_pic, threshold=0.9, device='serial-number', delay=0.4, timeout=10)
+>>> touch_if(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10)
 
 :description:
   touch template picture if template picture is  in current screen of Android Phone
@@ -90,7 +90,7 @@ Android Test API
 
 ------------
 
->>> long_touch(template_pic, threshold=0.9, device='serial-number', delay=0.8, timeout=10)
+>>> long_touch(template_pic, threshold=0.9, device=None, delay=0.8, timeout=10)
 
 :description:
   long touch template picture,throw a Error if template picture is not in current screen of Android Phone
@@ -107,7 +107,7 @@ Android Test API
 
 ------------
 
->>> touch_in(template_pic, target_pic, threshold=0.9, device='serial-number', delay=0.4, timeout=10)
+>>> touch_in(template_pic, target_pic, threshold=0.9, device=None, delay=0.4, timeout=10)
 
 :description:
   touch small picture in big picture
@@ -126,7 +126,7 @@ Android Test API
 
 ------------
 
->>> flick(start, direction, step=1, device='serial-number')
+>>> flick(start, direction, step=1, device=None)
 
 :description:
   flick screen to different direction.
@@ -141,7 +141,7 @@ Android Test API
 
 ------------
 
->>> swipe(start, end, device='serial-number')
+>>> swipe(start, end, device=None)
 
 :description:
   swipe from one point to another point.
@@ -154,7 +154,7 @@ Android Test API
 
 ------------
 
->>> keyevent(keycode, device='serial-number')
+>>> keyevent(keycode, device=None)
 
 :description:
   do hardkey actioin using keycode.
@@ -165,7 +165,7 @@ Android Test API
 
 ------------
 
->>> text(input, device='serial-number')
+>>> text(input, device=None)
 
 :description:
   input string via keyboard
