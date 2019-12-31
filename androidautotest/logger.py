@@ -1,10 +1,46 @@
 # -*- coding: UTF-8 -*-
-import os
-import sys
-import json
-import webbrowser
 from .tool import *
 
+class SummaryLogger:
+    @staticmethod
+    def write(log):
+        case_dir = log['dir']
+        summary_log_path = '%s%ssummary_report.html' % (case_dir, PATHSEP)
+        html_file = open(summary_log_path, mode='a')
+        #{"time":Timer.strftime("%Y%m%d%H%M%S", self.start_time),"name":self.case_name,"dir":case_dir, "url":self.html_file_path,"status":status}
+        html_file.write('<tr>')
+        html_file.write('<td>%s</td>' % log['name'])
+        html_file.write('<td>%s</td>' % log['path'])
+        html_file.write('<td>%s</td>' % log['time'])
+        if log['status'] == 'pass':
+            html_file.write('<td><a href="%s" style="color:green;">PASS</a></td>' % (log['url']))
+        else:
+            html_file.write('<td><a href="%s" style="color:red;">FAIL</a></td>' % (log['url']))
+        html_file.write('<tr>')
+        html_file.close()
+        
+    @staticmethod
+    def start(case_dir):
+        summary_log_path = '%s%ssummary_report.html' % (case_dir, PATHSEP)
+        Path.remove(summary_log_path)
+        html_file = open(summary_log_path, mode='a')
+        html_file.write('<meta http-equiv="Content-Type" content="text/html;charset=utf-8">')
+        html_file.write('<body style="width:80%;margin-left:10%;">')
+        html_file.write(r'<div id="top" style="background: #ffffff;padding-left:20px;box-shadow: 0px 0px 10px #888888;border-radius:5px;height:60px;line-height:60px;font-size:20px;text-align:center;">')
+        html_file.write(r'<p>Test Case Summary report</p>')
+        html_file.write(r'</div>')
+        html_file.write('<table style="width:100%;margin-top:20px;" border="1" cellspacing="0">')
+        html_file.write('<tr><th>case</th><th>directory</th><th>time</th><th>result</th></tr>')
+        html_file.close()
+
+    @staticmethod
+    def end(case_dir):
+        summary_log_path = '%s%ssummary_report.html' % (case_dir, PATHSEP)
+        html_file = open(summary_log_path, mode='a')
+        html_file.write('</table></body></html>')
+        html_file.close()
+        open_new_tab(summary_log_path)
+        
 # logger class
 class Logger:
     log_dir = ''
@@ -18,8 +54,7 @@ class Logger:
     
     def __init__(self):
         # case file name(like 'case001')
-        index_start = CASE_PATH.rfind(PATHSEP)
-        case_name = CASE_PATH[index_start+1:-4]
+        case_name = Path.name(CASE_PATH, -4)
         # open log when output first message
         self.is_start = False
         self.case_name = case_name 
@@ -27,8 +62,7 @@ class Logger:
         time_log, time_str, random_str = random_id()
         # create log dir
         log_dir = r'%s%slog%s%s.log.%s_%s' % (CASE_PATH, PATHSEP, PATHSEP, case_name, time_str, random_str)
-        if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
+        Path.makedirs(log_dir)
         self.log_dir = log_dir
         self.log_file_path = r'%s%slog_%s_%s_%s.txt' % (log_dir, PATHSEP, case_name, time_str, random_str)
         self.html_file_path = r'%s%sreport_%s_%s_%s.html' % (log_dir, PATHSEP, case_name, time_str, random_str)
@@ -38,7 +72,7 @@ class Logger:
         print(r'------------------------------------------------------------')
         print(r'case %s start...' % self.case_name)
         
-        self.start_time = time.time()
+        self.start_time = Timer.time()
         self.is_start = True
 
     def info(self, msg):
@@ -76,15 +110,16 @@ class Logger:
         self.write_html_file(status)
         print(r'case %s end...' % self.case_name)
         print(r'------------------------------------------------------------')
-        
+        case_dir = Path.parent(CASE_PATH)
+        SummaryLogger.write({"time":Timer.strftime("%Y%m%d_%H%M%S", self.start_time),"name":self.case_name,"dir":case_dir, "path":CASE_PATH, "url":self.html_file_path,"status":status})
         #open browser
-        webbrowser.open_new_tab(self.html_file_path)
-        sys.exit(0)
+        #webbrowser.open_new_tab(self.html_file_path)
+        Command.exit(0)
         
     def write_html_file(self, status):
         log_info_list = self.log_info_list
         # time consuming
-        consuming_time = time.time() - self.start_time
+        consuming_time = Timer.time() - self.start_time
         html_file = open(self.html_file_path, mode='a+')
         html_file.write('<meta http-equiv="Content-Type" content="text/html;charset=utf-8">')
         html_file.write('<body style="width:80%;margin-left:10%;">')
@@ -111,9 +146,9 @@ class Logger:
                     matchObj = {}
                     # window
                     if PATHSEP == '\\':
-                        matchObj = json.loads(log[33:].replace('\\', r'\\'))
+                        matchObj = Json.loads(log[33:].replace('\\', r'\\'))
                     else:# linux
-                        matchObj = json.loads(log[33:])
+                        matchObj = Json.loads(log[33:])
                     html_file.write('<div style="box-shadow: 0px 0px 5px #888888;">')
                     html_file.write('<div style="padding-left:20px;font-weight:blod;">Target:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="%s"></img></div>' % matchObj['template'])
                     html_file.write('<div style="margin-top:10px;padding-left:20px;font-weight:blod;">Screencap: <img src="%s"></img></div>' % matchObj['screencap'])

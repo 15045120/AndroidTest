@@ -1,3 +1,4 @@
+
 # AndroidTest
 
 The package is for android auto test, based on Python enviroment.
@@ -6,7 +7,7 @@ Basic thought is using ADB (Android Debug Bridge) to send command to Android tes
 
 ## Installation
  1.Install ADB ([Android Debug Bridge](https://github.com/15045120/AndroidTest/tree/master/dependency/adb)), and add it to path.
- 
+
  2.Use ASM ([Android Screen Monitor](https://github.com/15045120/AndroidTest/blob/master/dependency/asm.jar)) to capture partial picture, and you need to install JDK in your computer first to run it.
 
  - Simple to use:
@@ -65,25 +66,24 @@ Once you finish your code writing, you can run your case(for example: you create
 ```bash
 python -m androidautotest -h
 
-usage: androidautotest [-r|--run] <case_path> [-d|--device] <device_serial_number> [-t|--times] <run_times>
+androidautotest 0.0.2.21
 
-A framework to run test case
+usage: androidautotest [--casedir CASEDIR] [--device DEVICE] [--times TIMES]
+
+A framework to run test case for android automated test
 
 optional arguments:
-  -V, --version         Print version and exit
-  -h, --help            Print this help message and exit
+  -V, --version      Print version and exit
+  -h, --help         Print this help message and exit
 
 cmdlines options:
-  -c <case_path>, --case <case_path>
-                        Case path to run
-  -d <device_serial_number>, --device <device_serial_number>
-                        Device to switch
-  -t <run_times>, --times <run_times>
-                        Times of case running
+  --casedir CASEDIR  Case path to run
+  --device DEVICE    Device to switch
+  --times TIMES      Times of case running
 ```
 For example, run case001 with Android Phone which's serial number is 'HMKNW17421063974' for 10 times, you can write as follow.
 ```bash
-python -m androidautotest --case=E:\AndroidTest\workspace\case001.air --device=HMKNW17421063974 --times=10
+python -m androidautotest --casedir E:\AndroidTest\workspace\case001.air --device HMKNW17421063974 --times 10
 ```
 And there are three log files you can use to analyze your test plan after run your case.
 
@@ -91,3 +91,4 @@ In case001.air\log\case001.log.20191222010717_540637\:
  - log_case001_XXX.txt:all log output
  - serial_log_case001_XXX.txt:adb log output
  - adb log output:report of case run
+

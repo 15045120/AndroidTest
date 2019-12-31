@@ -1,0 +1,111 @@
+[2019-12-28 13:41:35] [androidtest] keyevent(HOME)
+[2019-12-28 13:41:36] [adb] adb -s HMKNW17421063974 shell input keyevent 3
+[2019-12-28 13:41:36] [androidtest] switch_device(HMKNW17421063974)
+[2019-12-28 13:41:36] [androidtest] keyevent(HOME)
+[2019-12-28 13:41:37] [adb] adb -s HMKNW17421063974 shell input keyevent 3
+[2019-12-28 13:41:37] [androidtest] exists('pic\20191215121636.png')
+[2019-12-28 13:41:39] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:39] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:40] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215121636.png
+[2019-12-28 13:41:40] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215121636.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134137713569.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:41:41] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:41] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:42] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215121636.png
+[2019-12-28 13:41:42] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215121636.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134140190865.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:41:44] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:44] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:45] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215121636.png
+[2019-12-28 13:41:45] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215121636.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134142518674.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:41:46] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:46] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:47] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215121636.png
+[2019-12-28 13:41:47] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215121636.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134145234089.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:41:49] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:49] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:50] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215121636.png
+[2019-12-28 13:41:50] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215121636.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134147751482.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:41:50] [androidtest] flick((400, 400), DIR_LEFT)
+[2019-12-28 13:41:50] [adb] adb -s HMKNW17421063974 shell input swipe 400 400 184 400
+[2019-12-28 13:41:52] [androidtest] exists('pic\20191215121636.png')
+[2019-12-28 13:41:53] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:53] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:54] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215121636.png
+[2019-12-28 13:41:54] finded in ractangle:(84, 959, 262, 1141, 0.91715235)
+[2019-12-28 13:41:54] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215121636.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134152631548.png", "exists":"True", "confidence": "0.917152"}
+[2019-12-28 13:41:54] [androidtest] touch('pic\20191215121636.png')
+[2019-12-28 13:41:56] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:56] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:57] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215121636.png
+[2019-12-28 13:41:57] finded in ractangle:(62, 959, 240, 1141, 0.91715837)
+[2019-12-28 13:41:57] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215121636.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134154291380.png", "exists":"True", "confidence": "0.917158"}
+[2019-12-28 13:41:58] [adb] adb -s HMKNW17421063974 shell input tap 151 1050
+[2019-12-28 13:41:58] [androidtest] touch('pic\20191215134814.png')
+[2019-12-28 13:41:59] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:59] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:00] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215134814.png
+[2019-12-28 13:42:00] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215134814.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134158531096.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:01] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:01] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:02] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215134814.png
+[2019-12-28 13:42:02] finded in ractangle:(438, 560, 626, 730, 0.9053225)
+[2019-12-28 13:42:02] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215134814.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134200187935.png", "exists":"True", "confidence": "0.905322"}
+[2019-12-28 13:42:03] [adb] adb -s HMKNW17421063974 shell input tap 532 645
+[2019-12-28 13:42:03] [androidtest] exists('pic\20191215143440.png')
+[2019-12-28 13:42:04] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:04] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:05] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215143440.png
+[2019-12-28 13:42:05] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215143440.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134203328054.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:06] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:06] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:06] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215143440.png
+[2019-12-28 13:42:06] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215143440.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134205601873.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:07] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:07] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:08] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215143440.png
+[2019-12-28 13:42:08] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215143440.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134206132568.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:09] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:09] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:10] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215143440.png
+[2019-12-28 13:42:10] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215143440.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134208417259.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:10] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:10] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:11] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215143440.png
+[2019-12-28 13:42:11] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215143440.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134210235914.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:17] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:17] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:18] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215143440.png
+[2019-12-28 13:42:18] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215143440.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134211439568.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:18] [androidtest] touch(530, 142)
+[2019-12-28 13:42:19] [adb] adb -s HMKNW17421063974 shell input tap 530 142
+[2019-12-28 13:42:19] [androidtest] text('15045120')
+[2019-12-28 13:42:20] [adb] adb -s HMKNW17421063974 shell input text '15045120'
+[2019-12-28 13:42:20] [androidtest] assert_exists('pic\20191215142425.png')
+[2019-12-28 13:42:20] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:20] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:21] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215142425.png
+[2019-12-28 13:42:21] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215142425.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134220704539.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:22] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:22] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:23] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215142425.png
+[2019-12-28 13:42:23] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215142425.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134221872345.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:24] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:24] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:25] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215142425.png
+[2019-12-28 13:42:25] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215142425.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134223045189.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:25] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:26] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:26] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215142425.png
+[2019-12-28 13:42:26] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215142425.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134225172086.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:27] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:27] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:28] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215142425.png
+[2019-12-28 13:42:28] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215142425.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134226106758.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:29] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:29] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:30] Trying finding: E:\AndroidTest\workspace\case001.air\pic\20191215142425.png
+[2019-12-28 13:42:30] [matching] {"template":"E:\AndroidTest\workspace\case001.air\pic\20191215142425.png", "screencap":"E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490\screencap_20191228134228213768.png", "exists":"False",  "confidence": "0.0"}
+[2019-12-28 13:42:30] [error] Traceback (most recent call last):
+  File "C:\myProgram\Python\Python36\lib\site-packages\androidautotest\api.py", line 115, in assert_exists
+    raise PictureNotFoundError(r'%s is not in screen' % (template_pic.getPath()))
+androidautotest.errors.PictureNotFoundError: 'E:\\AndroidTest\\workspace\\case001.air\\pic\\20191215142425.png is not in screen'
+

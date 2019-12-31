@@ -1,12 +1,10 @@
 # -*- coding: UTF-8 -*-
-import os
-from .tool import PATHSEP
-from .api import Device
+from .tool import PATHSEP,Path,Command
 from .errors import PathNotExistError,CaseNotFoundError
-
+from .logger import SummaryLogger
 """
-androidautotest [-r|--run] <case_path> [-d|--device] <device_serial_number> [-t|--times] <run_times>',
-case:case_path
+androidautotest [--casedir CASEDIR] [--device DEVICE] [--times TIMES],
+casedir:case_path
 device:device_serial_number
 times:run_times
 """
@@ -14,36 +12,48 @@ times:run_times
 EXECUTEABLE_FILE_SUFFIX = '.air'
 
 def execute(case_path, device_serial_number, run_times):
-    if not os.path.exists(case_path):
+    if not Path.exists(case_path):
         raise PathNotExistError('path %s not exists' % case_path)
     
-    if os.path.isfile(case_path):
+    if Path.isfile(case_path):
         raise CaseNotFoundError('%s is a file, please choose case path(suffix with ".air"): ' % case_path)
     # single case
     elif case_path[-4:] == EXECUTEABLE_FILE_SUFFIX:
+        # switch device
+        from .api import Device 
+        Device.switchDevice(device_serial_number)
+        # generate summary id
+        case_dir = Path.parent(case_path)
+        SummaryLogger.start(case_dir)
+        # run case
         for i in range(run_times):
-            index_start = case_path.rfind(PATHSEP)
-            case_name = case_path[index_start+1:-4]
-            Device.switchDevice(device_serial_number)
+            case_name = Path.name(case_path, -4)
             print('python %s%s%s.py' % (case_path, PATHSEP, case_name))
-            os.system('python %s%s%s.py' % (case_path, PATHSEP, case_name))
+            Command.write('python %s%s%s.py' % (case_path, PATHSEP, case_name))
+        SummaryLogger.end(case_dir)
     # case directory contains without case in it
-    elif len(os.listdir(case_path)) == 0:
+    elif len(Path.listdir(case_path)) == 0:
         raise CaseNotFoundError('there is no case in path %s' % case_path)
     else:
-        dirs = os.listdir(case_path)
+        dirs = Path.listdir(case_path)
         case_dirs = []
         for dir in dirs:
             dir_path = case_path+PATHSEP+dir
-            if os.path.isdir(dir_path) and dir_path[-4:] == EXECUTEABLE_FILE_SUFFIX:
+            if Path.isdir(dir_path) and dir_path[-4:] == EXECUTEABLE_FILE_SUFFIX:
                 case_dirs.append(dir_path)
         if len(case_dirs) == 0:
             raise CaseNotFoundError('there is no case in path %s' % case_path)
         else:
+            # switch device
+            from .api import Device 
+            Device.switchDevice(device_serial_number)
+            # generate summary id
+            all_case_dir = case_path
+            SummaryLogger.start(all_case_dir)
+            # run case
             for i in range(run_times):
                 for case_dir in case_dirs:
-                    index_start = case_dir.rfind(PATHSEP)
-                    case_name = case_dir[index_start+1:-4]
-                    Device.switchDevice(device_serial_number)
+                    case_name = Path.name(case_dir, -4)
                     print('python %s%s%s.py' % (case_dir, PATHSEP, case_name))
-                    os.system('python %s%s%s.py' % (case_dir, PATHSEP, case_name))
+                    Command.write('python %s%s%s.py' % (case_dir, PATHSEP, case_name))
+            SummaryLogger.end(all_case_dir)

@@ -1,0 +1,49 @@
+[2019-12-28 13:41:36] [adb] adb -s HMKNW17421063974 shell input keyevent 3
+[2019-12-28 13:41:37] [adb] adb -s HMKNW17421063974 shell input keyevent 3
+[2019-12-28 13:41:39] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:39] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:41] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:41] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:44] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:44] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:46] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:46] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:49] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:49] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:50] [adb] adb -s HMKNW17421063974 shell input swipe 400 400 184 400
+[2019-12-28 13:41:53] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:53] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:56] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:56] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:41:58] [adb] adb -s HMKNW17421063974 shell input tap 151 1050
+[2019-12-28 13:41:59] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:41:59] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:01] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:01] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:03] [adb] adb -s HMKNW17421063974 shell input tap 532 645
+[2019-12-28 13:42:04] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:04] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:06] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:06] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:07] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:07] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:09] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:09] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:10] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:10] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:17] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:17] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:19] [adb] adb -s HMKNW17421063974 shell input tap 530 142
+[2019-12-28 13:42:20] [adb] adb -s HMKNW17421063974 shell input text '15045120'
+[2019-12-28 13:42:20] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:20] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:22] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:22] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:24] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:24] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:25] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:26] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:27] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:27] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490
+[2019-12-28 13:42:29] [adb] adb -s HMKNW17421063974 shell screencap -p /sdcard/sc.png
+[2019-12-28 13:42:29] [adb] adb -s HMKNW17421063974 pull /sdcard/sc.png E:\AndroidTest\workspace\case001.air\log\case001.log.20191228134135_756490

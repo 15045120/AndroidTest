@@ -1,21 +1,19 @@
 import argparse
-import sys
-import os
 from .__init__ import MODULE,VERSION
-from .tool import LINESEQ
+from .tool import LINESEQ,Command
 from .client import execute
 
 def print_version():
     print('androidautotest {}{}'.format(VERSION, LINESEQ))
     
 def print_usage():
-    print('androidautotest [-c|--case] <case_path> [-d|--device] <device_serial_number> [-t|--times] <run_times>')
+    print('androidautotest [--casedir CASEDIR] [--device DEVICE] [--times TIMES]')
     
 def main():
     parser = argparse.ArgumentParser(
         prog='androidautotest',
-        usage='androidautotest [-c|--case] <case_path> [-d|--device] <device_serial_number> [-t|--times] <run_times>',
-        description='A framework to run test case',
+        usage='androidautotest [--casedir CASEDIR] [--device DEVICE] [--times TIMES]',
+        description='A framework to run test case for android automated test',
         add_help=False,
     )
     parser.add_argument(
@@ -28,42 +26,34 @@ def main():
     )
     cmd_line_grp = parser.add_argument_group('cmdlines options')
     cmd_line_grp.add_argument(
-        '-c', '--case', metavar='<case_path>', nargs=1, type=str,
+        '--casedir', metavar='CASEDIR', nargs=1, type=str,
         help='Case path to run'
     )
     
     cmd_line_grp.add_argument(
-        '-d', '--device', metavar='<device_serial_number>', nargs=1, type=str,
+        '--device', metavar='DEVICE', nargs=1, type=str,
         help='Device to switch'
     )
     cmd_line_grp.add_argument(
-        '-t', '--times', metavar='<run_times>', nargs=1, type=int,
+        '--times', metavar='TIMES', nargs=1, type=int,
         help='Times of case running'
     )
     args = parser.parse_args()
     
-    if not args.help and not args.version and not args.case and not args.device and not args.times:
+    if not args.help and not args.version and not args.casedir and not args.device and not args.times:
         print_version()
         parser.print_help()
-        sys.exit()
+        Command.exit()
     if args.help:
         print_version()
         parser.print_help()
-        sys.exit()
+        Command.exit()
     if args.version:
         print_version()
-        sys.exit()
+        Command.exit()
         
-    if not args.case:
-        print('androidautotest: error: miss argument: [-c|--case]')
-        sys.exit()
-    if not args.device:
-        print('androidautotest: error: miss argument: [-d|--device]')
-    if not args.times:
-        print('androidautotest: error: miss argument: [-t|--times]')
-        sys.exit()
     args = vars(args)
-    case_path = args['case'][0]
+    case_path = args['casedir'][0]
     device_serial_number = args['device'][0]
     run_times = args['times'][0]
     execute(case_path, device_serial_number, run_times)

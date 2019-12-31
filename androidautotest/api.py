@@ -1,8 +1,4 @@
 # -*- coding: UTF-8 -*-
-import time
-import os
-import sys
-import traceback
 from enum import Enum
 from .tool import *
 from .logger import Logger
@@ -12,26 +8,26 @@ from .errors import *
 try:
     import psutil
 except ModuleNotFoundError:
-    os.system(r'python -m pip install --upgrade pip')
-    os.system(r'pip install psutil -i https://pypi.tuna.tsinghua.edu.cn/simple/')
+    Command.write(r'python -m pip install --upgrade pip')
+    Command.write(r'pip install psutil -i https://pypi.tuna.tsinghua.edu.cn/simple/')
     import psutil
 try:
     from PIL import Image
 except ModuleNotFoundError:
-    os.system(r'python -m pip install --upgrade pip')
-    os.system(r'pip install pillow -i https://pypi.tuna.tsinghua.edu.cn/simple/')
+    Command.write(r'python -m pip install --upgrade pip')
+    Command.write(r'pip install pillow -i https://pypi.tuna.tsinghua.edu.cn/simple/')
     from PIL import Image
 try:
     import numpy as np
 except ModuleNotFoundError:
-    os.system(r'python -m pip install --upgrade pip')
-    os.system(r'pip install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple/')
+    Command.write(r'python -m pip install --upgrade pip')
+    Command.write(r'pip install numpy -i https://pypi.tuna.tsinghua.edu.cn/simple/')
     import numpy as np
 try:
     import cv2 as cv
 except ModuleNotFoundError:
-    os.system(r'python -m pip install --upgrade pip')
-    os.system(r'pip install opencv-python -i https://pypi.tuna.tsinghua.edu.cn/simple/')
+    Command.write(r'python -m pip install --upgrade pip')
+    Command.write(r'pip install opencv-python -i https://pypi.tuna.tsinghua.edu.cn/simple/')
     import cv2 as cv
 
 '''
@@ -56,7 +52,7 @@ class Device:
 
     @classmethod
     def initDeviceList(cls):
-        lines = read_lines(r'adb devices')
+        lines = Command.read(r'adb devices')
         # 'List of devices attached'
         if len(lines) == 1:
             raise NoDeviceError(r'there is no android device connect with PC')
@@ -82,7 +78,7 @@ class Device:
 # device
 Device.initDeviceList()
 
-if not sys.argv[0].endswith('__main__.py'):
+if not Command.argv(0).endswith('__main__.py'):
     logger = Logger()
 
 # template picture class
@@ -91,7 +87,7 @@ class Template:
         self.name = name.replace('\\',PATHSEP)
 
     def getPath(self):
-        return path_join(CASE_PATH, self.name)
+        return Path.path_join(CASE_PATH, self.name)
 
     def getName(self):
         return self.name
@@ -103,18 +99,18 @@ def assert_exists(template_pic, threshold=0.9, device=None, timeout=10):
         switch_device(device)
     logger.info(r"[androidtest] assert_exists('%s')" % template_pic.getName())
     
-    start_time = time.time()
-    end_time = time.time()
+    start_time = Timer.time()
+    end_time = Timer.time()
     while end_time-start_time < timeout:
         match_list = do_match(template_pic, threshold, device)
         if len(match_list) > 0:
             return
         else:
-            end_time = time.time()
+            end_time = Timer.time()
     try:
         raise PictureNotFoundError(r'%s is not in screen' % (template_pic.getPath()))
     except PictureNotFoundError as e:
-        logger.error(r'[error] %s' % traceback.format_exc())
+        logger.error(r'[error] %s' % Command.traceback())
 
 def assert_not_exists(template_pic, threshold=0.9, device=None, timeout=10):
     if device is None:
@@ -123,18 +119,18 @@ def assert_not_exists(template_pic, threshold=0.9, device=None, timeout=10):
         switch_device(device)
     logger.info(r"[androidtest] assert_not_exists('%s')" % template_pic.getName())
     
-    start_time = time.time()
-    end_time = time.time()
+    start_time = Timer.time()
+    end_time = Timer.time()
     while end_time-start_time < timeout:
         match_list = do_match(template_pic, threshold, device)
         if len(match_list) == 0:
             return
         else:
-            end_time = time.time()
+            end_time = Timer.time()
     try:
         raise PictureNotFoundError(r'%s is in screen' % (template_pic.getPath()))
     except PictureNotFoundError as e:
-        logger.error(r'[error] %s' % traceback.format_exc())
+        logger.error(r'[error] %s' % Command.traceback())
     
 def exists(template_pic, threshold=0.9, device=None, timeout=10):
     if device is None:
@@ -143,14 +139,14 @@ def exists(template_pic, threshold=0.9, device=None, timeout=10):
         switch_device(device)
     logger.info(r"[androidtest] exists('%s')" % template_pic.getName())
 
-    start_time = time.time()
-    end_time = time.time()
+    start_time = Timer.time()
+    end_time = Timer.time()
     while end_time-start_time < timeout:
         match_list = do_match(template_pic, threshold, device)
         if len(match_list) > 0:
             return True
         else:
-            end_time = time.time()
+            end_time = Timer.time()
     return False
 
 def touch_point(point, device=None):
@@ -160,7 +156,7 @@ def touch_point(point, device=None):
         switch_device(device)
     logger.info(r"[androidtest] touch(%d, %d)" % (point[0],point[1]))
 
-    os.system(r'adb -s %s shell input tap %d %d' % (Device.current_serial_number,point[0],point[1]))
+    Command.write(r'adb -s %s shell input tap %d %d' % (Device.current_serial_number,point[0],point[1]))
     logger.info(r'[adb] adb -s %s shell input tap %d %d' % (Device.current_serial_number,point[0],point[1]))
 
 def touch(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
@@ -174,26 +170,26 @@ def touch(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
         return
     logger.info(r"[androidtest] touch('%s')" % template_pic.getName())
 
-    start_time = time.time()
-    end_time = time.time()
+    start_time = Timer.time()
+    end_time = Timer.time()
     while end_time-start_time < timeout:
         match_list = do_match(template_pic, threshold, device)
         if len(match_list) > 0:
             point_x = (match_list[0][0]+match_list[0][2])*0.5
             point_y = (match_list[0][1]+match_list[0][3])*0.5
             if delay < 0.5:
-                os.system(r'adb -s %s shell input tap %d %d' % (Device.current_serial_number,point_x,point_y))
+                Command.write(r'adb -s %s shell input tap %d %d' % (Device.current_serial_number,point_x,point_y))
                 logger.info(r'[adb] adb -s %s shell input tap %d %d' % (Device.current_serial_number,point_x,point_y))
             else:
-                os.system(r'adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
+                Command.write(r'adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
                 logger.info(r'[adb] adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
             return
         else:
-            end_time = time.time()
+            end_time = Timer.time()
     try:
         raise PictureNotFoundError(r'can not find %s in screen' % (template_pic.getPath()))
     except PictureNotFoundError as e:
-        logger.error(r'[error] %s' % traceback.format_exc())
+        logger.error(r'[error] %s' % Command.traceback())
 
 def long_touch(template_pic, threshold=0.9, device=None, delay=0.8, timeout=10):
     if device is None:
@@ -206,22 +202,22 @@ def long_touch(template_pic, threshold=0.9, device=None, delay=0.8, timeout=10):
         return
     logger.info(r"[androidtest] long_touch('%s')" % template_pic.getName())
 
-    start_time = time.time()
-    end_time = time.time()
+    start_time = Timer.time()
+    end_time = Timer.time()
     while end_time-start_time < timeout:
         match_list = do_match(template_pic, threshold, device)
         if len(match_list) > 0:
             point_x = (match_list[0][0]+match_list[0][2])*0.5
             point_y = (match_list[0][1]+match_list[0][3])*0.5
-            os.system(r'adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
+            Command.write(r'adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
             logger.info(r'[adb] adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
             return
         else:
-            end_time = time.time()
+            end_time = Timer.time()
     try:
         raise PictureNotFoundError(r'can not find %s in screen' % (template_pic.getPath()))
     except PictureNotFoundError as e:
-        logger.error(r'[error] %s' % traceback.format_exc())
+        logger.error(r'[error] %s' % Command.traceback())
 
 def touch_if(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
     if device is None:
@@ -230,22 +226,22 @@ def touch_if(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
         switch_device(device)
     logger.info(r"[androidtest] touch_if('%s')" % template_pic.getName())
     
-    start_time = time.time()
-    end_time = time.time()
+    start_time = Timer.time()
+    end_time = Timer.time()
     while end_time-start_time < timeout:
         match_list = do_match(template_pic, threshold, device)
         if len(match_list) > 0:
             point_x = (match_list[0][0]+match_list[0][2])*0.5
             point_y = (match_list[0][1]+match_list[0][3])*0.5
             if delay < 0.5:
-                os.system(r'adb -s %s shell input tap %d %d' % (Device.current_serial_number,point_x,point_y))
+                Command.write(r'adb -s %s shell input tap %d %d' % (Device.current_serial_number,point_x,point_y))
                 logger.info(r'[adb] adb %s shell input tap %d %d' % (Device.current_serial_number,point_x,point_y))
             else:
-                os.system(r'adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
+                Command.write(r'adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
                 logger.info(r'[adb] adb %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
             return
         else:
-            end_time = time.time()
+            end_time = Timer.time()
 
 def touch_in(template_pic, target_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
     if device is None:
@@ -254,8 +250,8 @@ def touch_in(template_pic, target_pic, threshold=0.9, device=None, delay=0.4, ti
         switch_device(device)
     logger.info(r"[androidtest] touch_in('%s', '%s')" % (template_pic.getName(), target_pic.getName()))
 
-    start_time = time.time()
-    end_time = time.time()
+    start_time = Timer.time()
+    end_time = Timer.time()
     while end_time-start_time < timeout:
         target_match_list = do_match(target_pic, threshold, device)
         if len(target_match_list) > 0:
@@ -267,22 +263,22 @@ def touch_in(template_pic, target_pic, threshold=0.9, device=None, delay=0.4, ti
                     point_x = (pt[0]+pt[2])*0.5
                     point_y = (pt[1]+pt[3])*0.5
                     if delay < 0.5:
-                        os.system(r'adb -s %s shell input tap %d %d' % (Device.current_serial_number,point_x,point_y))
+                        Command.write(r'adb -s %s shell input tap %d %d' % (Device.current_serial_number,point_x,point_y))
                         logger.info(r'[adb] adb -s %s shell input tap %d %d' % (Device.current_serial_number,point_x,point_y))
                     else:
-                        os.system(r'adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
+                        Command.write(r'adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
                         logger.info(r'[adb] adb -s %s shell input swipe %d %d %d %d %d' % (Device.current_serial_number,point_x,point_y,point_x,point_y,delay*1000))
                     return
             try:
                 raise PictureNotFoundError(r'can not find %s in %s' % (template_pic.getPath(), target_pic.getPath()))
             except PictureNotFoundError as e:
-                logger.error(r'[error] %s' % traceback.format_exc())
+                logger.error(r'[error] %s' % Command.traceback())
         else:
-            end_time = time.time()
+            end_time = Timer.time()
     try:
         raise PictureNotFoundError(r'can not find %s in screen' % ( target_pic.getPath()))
     except PictureNotFoundError as e:
-        logger.error(r'[error] %s' % traceback.format_exc())
+        logger.error(r'[error] %s' % Command.traceback())
 
 # return [(891, 1042, 1035, 1110), (891, 1650, 1035, 1718)] or [] ps:(top_left_x, top_left_y, bottom_right_x, bottom_right_y)
 def do_match(template_pic, threshold, device):
@@ -291,7 +287,7 @@ def do_match(template_pic, threshold, device):
     time_log, time_str, random_str = random_id()
 
     # adb shell screencap
-    os.system(r'adb -s %s shell screencap -p /sdcard/sc.png' % Device.current_serial_number)
+    Command.write(r'adb -s %s shell screencap -p /sdcard/sc.png' % Device.current_serial_number)
     logger.info(r'[adb] adb -s %s shell screencap -p /sdcard/sc.png' % Device.current_serial_number)
     
     # create picture name
@@ -299,14 +295,14 @@ def do_match(template_pic, threshold, device):
     
     # adb shell push
     ADB_PULL = r'adb -s %s pull /sdcard/sc.png %s' % (Device.current_serial_number, logger.log_dir)
-    os.system(ADB_PULL)
+    Command.write(ADB_PULL)
     logger.info('[adb] %s' % ADB_PULL)
-    time.sleep(0.5)
+    Timer.sleep(0.5)
     
     # save picture to log dir and delete sc.png
-    screencap_path = path_join(logger.log_dir, pic_name)
-    Image.open(path_join(logger.log_dir,'sc.png')).save(screencap_path, 'png')
-    os.remove(path_join(logger.log_dir,'sc.png'))
+    screencap_path = Path.path_join(logger.log_dir, pic_name)
+    Image.open(Path.path_join(logger.log_dir,'sc.png')).save(screencap_path, 'png')
+    Path.remove(Path.path_join(logger.log_dir,'sc.png'))
     
     # do touchs
     logger.info('Trying finding: '+ template_path)
@@ -318,9 +314,9 @@ def do_match(template_pic, threshold, device):
     return match_list
 
 def template_match(full_pic, template_pic, threshold):
-    if not os.path.exists(full_pic):
+    if not Path.exists(full_pic):
         raise PictureNotFoundError(r'picture %s not exists' % full_pic)
-    if not os.path.exists(template_pic):
+    if not Path.exists(template_pic):
         raise PictureNotFoundError(r'picture %s not exists' % template_pic)
     #print(r'ASM.ZOOM_SIZE:%d' % ASM.ZOOM_SIZE)
     img = cv.imread(full_pic,0)
@@ -371,9 +367,8 @@ def flick(start, direction, step=1, device=None):
     else:
         switch_device(device)
     logger.info(r'[androidtest] flick(%s, %s)' % (str(start), direction.name))
-    r = os.popen(r'adb -s %s shell wm size' % Device.current_serial_number)
+    lines = Command.read(r'adb -s %s shell wm size' % Device.current_serial_number)
     # Physical size: 1080x1920
-    lines = r.readlines()
     screen_size = lines[0][15:].strip(LINESEQ).split('x')
     w = int(screen_size[0])
     h = int(screen_size[1])
@@ -381,28 +376,28 @@ def flick(start, direction, step=1, device=None):
     if direction == DIR_UP:
         one_step_size = int(h*0.1)
         command = r'adb -s %s shell input swipe %d %d %d %d' % (Device.current_serial_number, start[0], start[1], start[0], start[0]-step * one_step_size)
-        os.system(command)
+        Command.write(command)
         logger.info(r'[adb] adb -s %s shell input swipe %d %d %d %d' % (Device.current_serial_number, start[0], start[1], start[0], start[0]-step * one_step_size))
     elif direction == DIR_DOWN:
         one_step_size = int(h*0.1)
         command = r'adb -s %s shell input swipe %d %d %d %d' % (Device.current_serial_number, start[0], start[1], start[0], start[0]+step * one_step_size)
         logger.info(r'[adb] adb -s %s shell input swipe %d %d %d %d' % (Device.current_serial_number, start[0], start[1], start[0], start[0]+step * one_step_size))
-        os.system(command)
+        Command.write(command)
     elif direction == DIR_LEFT:
         one_step_size = int(w*0.1)
         command = r'adb -s %s shell input swipe %d %d %d %d' % (Device.current_serial_number, start[0], start[1], start[0]-step * one_step_size, start[0])
         logger.info(r'[adb] adb -s %s shell input swipe %d %d %d %d' % (Device.current_serial_number, start[0], start[1], start[0]-step * one_step_size, start[0]))
-        os.system(command)
+        Command.write(command)
     elif direction == DIR_RIGHT:
         one_step_size = int(w*0.1)
         command = r'adb -s %s shell input swipe %d %d %d %d' % (Device.current_serial_number, start[0], start[1], start[0]+step * one_step_size, start[0])
         logger.info(r'[adb] adb -s %s shell input swipe %d %d %d %d' % (Device.current_serial_number, start[0], start[1], start[0]+step * one_step_size, start[0]))
-        os.system(command)
+        Command.write(command)
     else:
         try:
             raise PictureNotFoundError(r'not support flick to %s' % direction)
         except PictureNotFoundError as e:
-            logger.error(r'[error] %s' % traceback.format_exc())
+            logger.error(r'[error] %s' % Command.traceback())
 
 def swipe(start, end, device=None):
     if device is None:
@@ -411,7 +406,7 @@ def swipe(start, end, device=None):
         switch_device(device)
     logger.info(r'[androidtest] swipe(%s, %s)' % (str(start), str(end)))
     command = r'adb -s %s shell input swipe %d %d %d %d' % (Device.current_serial_number, start[0], start[1], end[0], end[1])
-    os.system(command)
+    Command.write(command)
     logger.info(r'[adb] adb -s %s shell input swipe %d %d %d %d' % (Device.current_serial_number, start[0], start[1], end[0], end[1]))
 
 # keycode enum
@@ -435,7 +430,7 @@ def keyevent(keycode, device=None):
         switch_device(device)
     logger.info(r'[androidtest] keyevent(%s)' % keycode.name)
 
-    os.system(r'adb -s %s shell input keyevent %d' % (Device.current_serial_number, keycode.value))
+    Command.write(r'adb -s %s shell input keyevent %d' % (Device.current_serial_number, keycode.value))
     logger.info(r'[adb] adb -s %s shell input keyevent %d'% (Device.current_serial_number, keycode.value))
 
 def text(input, device=None):
@@ -445,12 +440,12 @@ def text(input, device=None):
         switch_device(device)
     logger.info(r"[androidtest] text('%s')" % input)
 
-    os.system(r"adb -s %s shell input text '%s'" % (Device.current_serial_number, input))
+    Command.write(r"adb -s %s shell input text '%s'" % (Device.current_serial_number, input))
     logger.info(r"[adb] adb -s %s shell input text '%s'" % (Device.current_serial_number, input))
 
 def sleep(delay):
     logger.info(r'[androidtest] sleep(%s)' % str(delay))
-    time.sleep(delay)
+    Timer.sleep(delay)
 
 def switch_device(serial_number):
     logger.info(r'[androidtest] switch_device(%s)' % serial_number)
