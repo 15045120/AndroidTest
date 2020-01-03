@@ -5,30 +5,40 @@ The package is for android auto test, based on Python enviroment.
 
 Basic thought is using ADB (Android Debug Bridge) to send command to Android test Phone connected with the PC and match picture by match template algorithm in opencv-python.
 ## Requirement
- 1. ADB ([Android Debug Bridge](https://github.com/15045120/AndroidTest/tree/master/dependency/adb))
+ 1.ADB ([Android Debug Bridge](https://github.com/15045120/AndroidTest/tree/master/dependency/adb))
+
 Follow information indicate you have installed ADB successfully.
-    ```bash
-    > adb
-    Android Debug Bridge version 1.0.41
-    Version 29.0.5-5949299
-    Installed as E:\AndroidTest\dependency\adb\adb.exe
-    ...
-    ```
-    
- 2. ASM ([Android Screen Monitor](https://github.com/15045120/AndroidTest/blob/master/dependency/asm.jar))
+```bash
+> adb
+Android Debug Bridge version 1.0.41
+Version 29.0.5-5949299
+Installed as E:\AndroidTest\dependency\adb\adb.exe
+...
+```
+
+2.ASM ([Android Screen Monitor](https://github.com/15045120/AndroidTest/blob/master/dependency/asm.jar))
+
  Use to capture partial picture, and you need to install JDK in your computer before running it.
 
-     - Simple to use:
-    ```bash
-    java -jar asm.jar
-    ```
-     - Then adjust zoom to 50%, you can also set zoom to other size, but need to add some code in your case source file after your create your case file:
-    ```python
-    # adjust asm zoom to other size, 25% 
-    ASM.ZOOM_SIZE = 25
-    ```
+
+2.1.  Simple to use:
+
+```bash
+java -jar asm.jar
+```
+
+2.2. Then adjust zoom to 50%, you can also set zoom to other size, but need to add some code in your case source file after your create your case file:
+```python
+# adjust asm zoom to other size, 25% 
+ASM.ZOOM_SIZE = 25
+```
+
+3.Tesseract ([Tesseract-OCR](https://github.com/tesseract-ocr/tesseract))
+
+ If you want to use the mechod 'image_to_string' in the 'androidautotest.api' which can recognize text in pictures, you need to install Tesseract and install testdata necessary like chinese 'chi_sim'.
+
 ## Installation
- 
+
  1.Install androidautotest
 ```bash
 pip install androidautotest 
@@ -36,22 +46,24 @@ pip install androidautotest
 Follow information indicate you have installed androidautotest successfully.
 ```bash
 > python -m androidautotest
-usage: androidautotest [--casedir CASEDIR] [--device DEVICE] [--times TIMES] [--newcase NEWCASE] [--savedir SAVEDIR]
+usage:
+  androidautotest --newcase <NEWCASE> --savedir <SAVEDIR>
+  androidautotest --casedir <CASEDIR> --device <DEVICE> --times <TIMES>
 
 A framework to run test case for android automated test
 
 optional arguments:
-  -V, --version      Print version and exit
-  -h, --help         Print this help message and exit
+  -V, --version        Print version and exit
+  -h, --help           Print this help message and exit
 
 create options:
-  --newcase NEWCASE  New case name to create
-  --savedir SAVEDIR  Path to save new case
+  --newcase <NEWCASE>  New case name to create
+  --savedir <SAVEDIR>  Path to save new case
 
 run options:
-  --casedir CASEDIR  Case path to run
-  --device DEVICE    Device to switch
-  --times TIMES      Times of case running
+  --casedir <CASEDIR>  Case path to run
+  --device <DEVICE>    Device to switch
+  --times <TIMES>      Times of case running
 ```
  2.create a new case to start your test task with Android Phone(For example: to create a new case named 'case001').
 
@@ -90,14 +102,13 @@ end()
 ```
 Once you finish your code writing, you can run your case.
 
-For example, run case001 with Android Phone which's serial number is 'HMKNW17421063974' for 10 times, you can write as follow.
+For example, run case001 with Android Phone which's serial number is 'HMKNW17421063974' for 5 times, you can write as follow.
 ```bash
-python -m androidautotest --casedir E:\AndroidTest\workspace\case001.air --device HMKNW17421063974 --times 10
+python -m androidautotest --casedir E:\AndroidTest\workspace\case001.air --device HMKNW17421063974 --times 5
 ```
 And there are three log files you can use to analyze your test plan after run your case.
 
-In case001.air\log\case001.log.20191222010717_540637\:
+In case001.air\log\case001.log.20191222010717_540637:
  - log_case001_XXX.txt:all log output
  - serial_log_case001_XXX.txt:adb log output
  - adb log output:report of case run
-

@@ -36,6 +36,14 @@ adb usage: https://juejin.im/post/5b5683bcf265da0f9b4dea96
 match template: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_template_matching/py_template_matching.html   
 '''
 
+# all public item used by case file 
+__all__=('ASM', 'Template', 'switch_device', 'end',\
+        'assert_exists', 'assert_not_exists', 'exists',\
+        'touch', 'long_touch', 'touch_if', 'touch_in',\
+        'flick', 'DIR_UP', 'DIR_DOWN', 'DIR_LEFT', 'DIR_RIGHT', 'swipe',\
+        'keyevent', 'HOME', 'BACK', 'VOLUME_UP', 'VOLUME_DOWN', 'POWER',\
+        'text', 'image_to_string', 'sleep')
+
 # asm zoom size
 class ASM:
     ZOOM_SIZE = 50
@@ -52,6 +60,10 @@ class Device:
 
     @classmethod
     def initDeviceList(cls):
+        lines = Command.read(r'adb')
+        if len(lines) == 0:
+            raise ADBNotFoundError()
+        # 'Android Debug Bridge version'
         lines = Command.read(r'adb devices')
         # 'List of devices attached'
         if len(lines) == 1:
@@ -74,7 +86,7 @@ class Device:
         index = cls.serial_number_list.index(serial_number)
         cls.current_device = cls.device_list[index]
         cls.current_serial_number = cls.serial_number_list[index]
-        
+
 # device
 Device.initDeviceList()
 
@@ -442,6 +454,85 @@ def text(input, device=None):
 
     Command.write(r"adb -s %s shell input text '%s'" % (Device.current_serial_number, input))
     logger.info(r"[adb] adb -s %s shell input text '%s'" % (Device.current_serial_number, input))
+
+def position_to_string(position, lang_arg):
+    logger.info(r"[androidtest] image_to_string(%s)" % str(position))
+    # [top_left_x,top_left_y,bottom_right_x,bottom_right_y]
+    # generate identify id 
+    time_log, time_str, random_str = random_id()
+
+    # adb shell screencap
+    Command.write(r'adb -s %s shell screencap -p /sdcard/sc.png' % Device.current_serial_number)
+    logger.info(r'[adb] adb -s %s shell screencap -p /sdcard/sc.png' % Device.current_serial_number)
+    
+    # create picture name
+    pic_name = r'screencap_%s%s.png' % (time_str, random_str)
+    
+    # adb shell push
+    ADB_PULL = r'adb -s %s pull /sdcard/sc.png %s' % (Device.current_serial_number, logger.log_dir)
+    Command.write(ADB_PULL)
+    logger.info('[adb] %s' % ADB_PULL)
+    Timer.sleep(0.5)
+    
+    # save picture to log dir and delete sc.png
+    screencap_path = Path.path_join(logger.log_dir, pic_name)
+    Image.open(Path.path_join(logger.log_dir,'sc.png')).save(screencap_path, 'png')
+    Path.remove(Path.path_join(logger.log_dir,'sc.png'))
+    
+    # intercept image in particular position
+    image = cv.imread(screencap_path)
+    img2 = image.copy()
+    #img2 = image[::-1]
+    crop_img = img2[position[1]:position[3],position[0]:position[2]]
+    crop_img_name = r'crop_%s%s.png' % (time_str, random_str)
+    crop_img_path = Path.path_join(logger.log_dir, crop_img_name)
+    cv.imwrite(crop_img_path, crop_img)
+    
+
+    
+    # tesseract ocr
+    Command.write(r"tesseract {} {} -l {}".format(crop_img_path, 'ocr_output', lang_arg))
+    with open('ocr_output.txt', mode='r',encoding='utf-8') as file:
+        res = file.readlines()[:-1]
+        file.close()
+        Path.remove('ocr_output.txt')
+        res = ''.join(res).replace(' ','')
+        logger.info(r'[tesseract] {"template":"%s", "screencap":"%s", "result": "%s"}' % (crop_img_path, screencap_path, res))
+        return res
+
+def image_to_string(template_pic):
+    # ensure tesseract is installed
+    lines = Command.read('tesseract')
+    if len(lines) == 0:
+        raise TesseractNotFoundError()
+     
+    lines = Command.read(r'tesseract --list-langs')
+    #List of available languages (3):
+    #   chi_sim
+    #   eng
+    #   osd
+    lang_arg = lines[1]
+    if len(lines) > 2:
+        for lang in lines[2:len(lines)]:
+            lang_arg = lang_arg + '+' + lang
+    # position
+    if type(template_pic) == list or type(template_pic) == tuple:
+        return position_to_string(template_pic, lang_arg)
+        
+    logger.info(r"[androidtest] image_to_string('%s')" % template_pic.getName())
+
+    # picture
+    template_path = template_pic.getPath()
+    if not Path.exists(template_path):
+        raise PictureNotFoundError(r'picture %s not exists' % template_path)
+    Command.write(r"tesseract {} {} -l {}".format(template_path, 'ocr_output', lang_arg))
+    with open('ocr_output.txt', mode='r',encoding='utf-8') as file:
+        res = file.readlines()[:-1]
+        file.close()
+        Path.remove('ocr_output.txt')
+        res = ''.join(res).replace(' ','')
+        logger.info(r'[tesseract] {"template":"%s", "screencap":"%s", "result": "%s"}' % (crop_img_path, screencap_path, res))
+        return res
 
 def sleep(delay):
     logger.info(r'[androidtest] sleep(%s)' % str(delay))

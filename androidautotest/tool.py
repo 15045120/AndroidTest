@@ -6,6 +6,7 @@ import random
 import sys
 import json
 import webbrowser
+import subprocess
 
 # dirname:get parent directory
 # sys.argv[0] getFileName
@@ -112,7 +113,7 @@ class Json:
         
     @staticmethod
     def loads(str):
-        return json.loads(str)
+        return json.loads(str, encoding="utf-8", strict=False)
         
 class Timer:
     @staticmethod

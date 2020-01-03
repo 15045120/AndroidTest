@@ -176,6 +176,15 @@ Android Test API
 
 ------------
 
+>>> image_to_string(template_pic)
+
+:description:
+  recognize text in pictures
+:template_pic:
+  The object of Template class or a list [top_left_x, top_left_y, bottom_right_x, bottom_right_y] like [120,200,200,400].
+
+------------
+
 >>> sleep(delay)
 
 :description:
