@@ -93,7 +93,7 @@ class Logger:
         if not self.is_start:
             self.start()
         log_file = open(self.log_file_path, mode='a+', encoding='utf-8')
-        print(msg)
+        print('\033[31m%s\033[0m' % msg)
         time_log, time_str, random_str = random_id()
         log_file.write(line_join(time_log, msg))
         log_file.close()
@@ -105,7 +105,11 @@ class Logger:
         if not self.is_start:
             self.start()
         self.write_html_file(status)
-        print(r'case %s end...' % self.case_name)
+        if status == 'pass':
+            print('\033[37;42mcase %s end...\033[0m' % self.case_name)
+        else:
+            print('\033[37;41mcase %s end...\033[0m' % self.case_name)
+        # print(r'case %s end...' % self.case_name)
         print(r'------------------------------------------------------------')
         case_dir = Path.parent(CASE_PATH)
         SummaryLogger.write({"time":Timer.strftime("%Y%m%d_%H%M%S", self.start_time),"name":self.case_name,"dir":case_dir, "path":CASE_PATH, "url":self.html_file_path,"status":status})

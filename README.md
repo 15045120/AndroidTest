@@ -1,4 +1,3 @@
-
 # AndroidTest
 
 The package is for android auto test, based on Python enviroment.
@@ -7,27 +6,12 @@ Basic thought is using ADB (Android Debug Bridge) to send command to Android tes
 ## Requirement
  1.ADB ([Android Debug Bridge](https://github.com/15045120/AndroidTest/tree/master/dependency/adb))
 
-Follow information indicate you have installed ADB successfully.
-```bash
-> adb
-Android Debug Bridge version 1.0.41
-Version 29.0.5-5949299
-Installed as E:\AndroidTest\dependency\adb\adb.exe
-...
-```
 
 2.ASM ([Android Screen Monitor](https://github.com/15045120/AndroidTest/blob/master/dependency/asm.jar))
 
  Use to capture partial picture, and you need to install JDK in your computer before running it.
 
-
-2.1.  Simple to use:
-
-```bash
-java -jar asm.jar
-```
-
-2.2. Then adjust zoom to 50%, you can also set zoom to other size, but need to add some code in your case source file after your create your case file:
+ Then adjust zoom to 50%, you can also set zoom to other size, but need to add some code in your case source file after your create your case file:
 ```python
 # adjust asm zoom to other size, 25% 
 ASM.ZOOM_SIZE = 25
@@ -37,7 +21,7 @@ ASM.ZOOM_SIZE = 25
 
  If you want to use the mechod 'image_to_string' in the 'androidautotest.api' which can recognize text in pictures, you need to install Tesseract and install testdata necessary like chinese 'chi_sim'.
 
-## Installation
+## Installation & Usage
 
  1.Install androidautotest
 ```bash
@@ -47,6 +31,8 @@ Follow information indicate you have installed androidautotest successfully.
 ```bash
 > python -m androidautotest
 usage:
+  androidautotest --installdep
+  androidautotest --startasm
   androidautotest --newcase <NEWCASE> --savedir <SAVEDIR>
   androidautotest --casedir <CASEDIR> --device <DEVICE> --times <TIMES>
 
@@ -56,16 +42,32 @@ optional arguments:
   -V, --version        Print version and exit
   -h, --help           Print this help message and exit
 
-create options:
+install dependency:
+  --installdep         install dependency of androidautotest
+
+start asm:
+  --startasm           start Android Screen Monitor
+
+create case:
   --newcase <NEWCASE>  New case name to create
   --savedir <SAVEDIR>  Path to save new case
 
-run options:
+run case:
   --casedir <CASEDIR>  Case path to run
   --device <DEVICE>    Device to switch
   --times <TIMES>      Times of case running
 ```
- 2.create a new case to start your test task with Android Phone(For example: to create a new case named 'case001').
+ 2.install requirements 
+
+```bash
+python -m androidautotest --installdep
+```
+ 3.start Android Screen Monitor(First, connect your Android Phone with PC, and open adb debug mode), then run follow command:
+
+```bash
+python -m androidautotest --startasm
+```
+ 4.create a new case to start your test task with Android Phone(For example: to create a new case named 'case001').
 
 ```bash
 python -m androidautotest --newcase case001 --savedir E:\AndroidTest\workspace
@@ -109,6 +111,6 @@ python -m androidautotest --casedir E:\AndroidTest\workspace\case001.air --devic
 And there are three log files you can use to analyze your test plan after run your case.
 
 In case001.air\log\case001.log.20191222010717_540637:
- - log_case001_XXX.txt:all log output
- - serial_log_case001_XXX.txt:adb log output
- - adb log output:report of case run
+1.log_case001_XXX.txt: all log output
+2.serial_log_case001_XXX.txt: adb log output
+3.adb log output: report of case run

@@ -1,7 +1,7 @@
 import argparse
 from .__init__ import MODULE,VERSION
 from .tool import LINESEQ,Command
-from .client import execute,create
+from .client import execute,create,install,startasm
 
 def print_version():
     print('androidautotest {}{}'.format(VERSION, LINESEQ))
@@ -15,7 +15,7 @@ def print_create_usage():
 def main():
     parser = argparse.ArgumentParser(
         prog='androidautotest',
-        usage='{}  androidautotest --newcase <NEWCASE> --savedir <SAVEDIR> {}  androidautotest --casedir <CASEDIR> --device <DEVICE> --times <TIMES>'.format(LINESEQ, LINESEQ),
+        usage='{}  androidautotest --installdep {}  androidautotest --startasm {}  androidautotest --newcase <NEWCASE> --savedir <SAVEDIR> {}  androidautotest --casedir <CASEDIR> --device <DEVICE> --times <TIMES>'.format(LINESEQ, LINESEQ, LINESEQ, LINESEQ, LINESEQ),
         description='A framework to run test case for android automated test',
         add_help=False,
     )
@@ -27,7 +27,18 @@ def main():
         '-h', '--help', action='store_true',
         help='Print this help message and exit'
     )
-    cmd_line_grp = parser.add_argument_group('create options')
+    cmd_line_grp = parser.add_argument_group('install dependency')
+    cmd_line_grp.add_argument(
+        '--installdep', action='store_true',
+        help='install dependency of androidautotest'
+    )
+    cmd_line_grp = parser.add_argument_group('start asm')
+    cmd_line_grp.add_argument(
+        '--startasm', action='store_true',
+        help='start Android Screen Monitor'
+    )
+    
+    cmd_line_grp = parser.add_argument_group('create case')
     cmd_line_grp.add_argument(
         '--newcase',  metavar='<NEWCASE>',nargs=1, type=str,
         help='New case name to create'
@@ -38,7 +49,7 @@ def main():
         help='Path to save new case'
     )
     
-    cmd_line_grp = parser.add_argument_group('run options')
+    cmd_line_grp = parser.add_argument_group('run case')
     cmd_line_grp.add_argument(
         '--casedir', metavar='<CASEDIR>', nargs=1, type=str,
         help='Case path to run'
@@ -73,6 +84,10 @@ def main():
         new_case_name = args['newcase'][0]
         save_dir = args['savedir'][0]
         create(new_case_name, save_dir)
+    elif args.installdep:
+        install()
+    elif args.startasm:
+        startasm()
     elif args.casedir or args.device or args.times:
         print_run_usage()
         Command.exit()
