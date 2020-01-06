@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="androidautotest",
-    version="0.0.2.27",
+    version="0.0.2.28",
     author="15045120",
     author_email="1337078409@qq.com",
     description="android test framework using adb connection and template matching in opencv",

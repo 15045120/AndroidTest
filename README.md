@@ -1,3 +1,4 @@
+
 # AndroidTest
 
 The package is for android auto test, based on Python enviroment.
@@ -111,6 +112,9 @@ python -m androidautotest --casedir E:\AndroidTest\workspace\case001.air --devic
 And there are three log files you can use to analyze your test plan after run your case.
 
 In case001.air\log\case001.log.20191222010717_540637:
+
 1.log_case001_XXX.txt: all log output
+
 2.serial_log_case001_XXX.txt: adb log output
+
 3.adb log output: report of case run

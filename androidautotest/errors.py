@@ -49,3 +49,9 @@ class TesseractNotFoundError(Error):
         self.message = r'Tesseract is not install in your computer, visit https://github.com/tesseract-ocr/tesseract'
     def __str__(self):
         return repr(self.message)
+
+class JavaNotFoundError(Error):
+    def __init__(self):
+        self.message = r'Java is not install in your computer, visit https://www.oracle.com/technetwork/java/javase/downloads/index.html'
+    def __str__(self):
+        return repr(self.message)
