@@ -1,2 +1,2 @@
 MODULE='androidautotest'
-VERSION='0.0.2.28'
+VERSION='0.0.2.32'

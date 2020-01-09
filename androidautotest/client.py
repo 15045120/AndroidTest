@@ -2,12 +2,7 @@
 from .tool import PATHSEP,LINESEQ,PLATFORM,USER_HOME,Path,Command,Downloader
 from .errors import PathNotExistError,CaseNotFoundError,CaseHasExistError,ADBNotFoundError,JavaNotFoundError,NoDeviceError
 from .logger import SummaryLogger
-"""
-androidautotest [--casedir CASEDIR] [--device DEVICE] [--times TIMES] [--newcase NEWCASE] [--savedir SAVEDIR],
-casedir:case_path
-device:device_serial_number
-times:run_times
-"""
+
 # to execute case that is suffix with ".air"
 EXECUTEABLE_FILE_SUFFIX = '.air'
 
@@ -105,14 +100,25 @@ def install():
     # install adb
     print('Install ADB(Android Debug Bridge) ...')
     if PLATFORM  == 'Windows':
-        Downloader.download('https://dl.google.com/android/repository/platform-tools-latest-windows.zip', module_path)
+        Downloader().download('https://dl.google.com/android/repository/platform-tools-latest-windows.zip', module_path)
+        msg = 'To use androidautotest, do the following: \n \
+    add {} to Path'.format(Path.path_join(module_path, 'platform-tools'))
+        
     elif PLATFORM == 'Linux':
-        Downloader.download('https://dl.google.com/android/repository/platform-tools_r29.0.5-linux.zip', module_path)
+        Downloader().download('https://dl.google.com/android/repository/platform-tools_r29.0.5-linux.zip', module_path)
+        msg = '  To use androidautotest, do the following: \n \
+    1.edit file named .bashrc \n \
+    sudo vi ~/.bashrc \n \
+    2.add follow code in the end of the file \n \
+    export PATH=$PATH:{} \n \
+    3.valid the environment variable \n \
+    source ~/.bashrc'.format(Path.path_join(module_path, 'platform-tools'))
+    
     print('Install ADB(Android Debug Bridge) Successfully')
     
     # install asm
     print('Install ASM(Android Screen Monitor) ...')
-    Downloader.download('http://lc-4z6WybNb.cn-n1.lcfile.com/7935d55ddfbc6360797f/asm4androidautotest.zip', module_path)
+    Downloader().download('http://lc-4z6WybNb.cn-n1.lcfile.com/7935d55ddfbc6360797f/asm4androidautotest.zip', module_path)
     print('Install ASM(Android Screen Monitor) Successfully')
     
     # copy asm.jar file to platform-tools directory
@@ -121,10 +127,9 @@ def install():
     # remove asm.jar
     Path.remove(Path.path_join(module_path, 'asm.jar'))
 
-    msg = r' To use androidautotest, add "%s" to Path variables ' % Path.path_join(module_path, 'platform-tools')
     # to valid escape character
     Command.write("")
-    print('\033[37;42m{}\033[0m'.format(msg))
+    print('\033[31m{}\033[0m'.format(msg))
 
 # start asm
 def startasm():

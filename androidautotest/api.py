@@ -37,12 +37,12 @@ match template: https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutor
 '''
 
 # all public item used by case file 
-__all__=('ASM', 'Template', 'switch_device', 'end',\
+__all__=['ASM', 'Template', 'switch_device', 'end',\
         'assert_exists', 'assert_not_exists', 'exists',\
         'touch', 'long_touch', 'touch_if', 'touch_in',\
         'flick', 'DIR_UP', 'DIR_DOWN', 'DIR_LEFT', 'DIR_RIGHT', 'swipe',\
         'keyevent', 'HOME', 'BACK', 'VOLUME_UP', 'VOLUME_DOWN', 'POWER',\
-        'text', 'image_to_string', 'sleep')
+        'text', 'image_to_string', 'sleep']
 
 # asm zoom size
 class ASM:
@@ -114,7 +114,7 @@ def assert_exists(template_pic, threshold=0.9, device=None, timeout=10):
     start_time = Timer.time()
     end_time = Timer.time()
     while end_time-start_time < timeout:
-        match_list = do_match(template_pic, threshold, device)
+        match_list = _do_match(template_pic, threshold, device)
         if len(match_list) > 0:
             return
         else:
@@ -134,7 +134,7 @@ def assert_not_exists(template_pic, threshold=0.9, device=None, timeout=10):
     start_time = Timer.time()
     end_time = Timer.time()
     while end_time-start_time < timeout:
-        match_list = do_match(template_pic, threshold, device)
+        match_list = _do_match(template_pic, threshold, device)
         if len(match_list) == 0:
             return
         else:
@@ -154,14 +154,14 @@ def exists(template_pic, threshold=0.9, device=None, timeout=10):
     start_time = Timer.time()
     end_time = Timer.time()
     while end_time-start_time < timeout:
-        match_list = do_match(template_pic, threshold, device)
+        match_list = _do_match(template_pic, threshold, device)
         if len(match_list) > 0:
             return True
         else:
             end_time = Timer.time()
     return False
 
-def touch_point(point, device=None):
+def _touch_point(point, device=None):
     if device is None:
         Device.switchDevice(Device.current_serial_number)
     else:
@@ -178,14 +178,14 @@ def touch(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
         switch_device(device)
     # python is not support method override, use type judge 
     if type(template_pic) == list or type(template_pic) == tuple:
-        touch_point(template_pic, device)
+        _touch_point(template_pic, device)
         return
     logger.info(r"[androidtest] touch('%s')" % template_pic.getName())
 
     start_time = Timer.time()
     end_time = Timer.time()
     while end_time-start_time < timeout:
-        match_list = do_match(template_pic, threshold, device)
+        match_list = _do_match(template_pic, threshold, device)
         if len(match_list) > 0:
             point_x = (match_list[0][0]+match_list[0][2])*0.5
             point_y = (match_list[0][1]+match_list[0][3])*0.5
@@ -210,14 +210,14 @@ def long_touch(template_pic, threshold=0.9, device=None, delay=0.8, timeout=10):
         switch_device(device)
     # python is not support method override, use type judge 
     if type(template_pic) == list or type(template_pic) == tuple:
-        touch_point(template_pic, device)
+        _touch_point(template_pic, device)
         return
     logger.info(r"[androidtest] long_touch('%s')" % template_pic.getName())
 
     start_time = Timer.time()
     end_time = Timer.time()
     while end_time-start_time < timeout:
-        match_list = do_match(template_pic, threshold, device)
+        match_list = _do_match(template_pic, threshold, device)
         if len(match_list) > 0:
             point_x = (match_list[0][0]+match_list[0][2])*0.5
             point_y = (match_list[0][1]+match_list[0][3])*0.5
@@ -241,7 +241,7 @@ def touch_if(template_pic, threshold=0.9, device=None, delay=0.4, timeout=10):
     start_time = Timer.time()
     end_time = Timer.time()
     while end_time-start_time < timeout:
-        match_list = do_match(template_pic, threshold, device)
+        match_list = _do_match(template_pic, threshold, device)
         if len(match_list) > 0:
             point_x = (match_list[0][0]+match_list[0][2])*0.5
             point_y = (match_list[0][1]+match_list[0][3])*0.5
@@ -265,10 +265,10 @@ def touch_in(template_pic, target_pic, threshold=0.9, device=None, delay=0.4, ti
     start_time = Timer.time()
     end_time = Timer.time()
     while end_time-start_time < timeout:
-        target_match_list = do_match(target_pic, threshold, device)
+        target_match_list = _do_match(target_pic, threshold, device)
         if len(target_match_list) > 0:
             target_point = target_match_list[0]
-            template_match_list = do_match(template_pic, threshold, device)
+            template_match_list = _do_match(template_pic, threshold, device)
             for pt in template_match_list:
                 if pt[0] >= target_point[0] and pt[1] >= target_point[1] and pt[2] <= target_point[2] and pt[3] <= target_point[3]:
                     logger.info('finded ractangle '+ str(pt) +' in ' + str(target_point))
@@ -293,7 +293,7 @@ def touch_in(template_pic, target_pic, threshold=0.9, device=None, delay=0.4, ti
         logger.error(r'[error] %s' % Command.traceback())
 
 # return [(891, 1042, 1035, 1110), (891, 1650, 1035, 1718)] or [] ps:(top_left_x, top_left_y, bottom_right_x, bottom_right_y)
-def do_match(template_pic, threshold, device):
+def _do_match(template_pic, threshold, device):
     template_path = template_pic.getPath()
     # generate identify id 
     time_log, time_str, random_str = random_id()
@@ -318,14 +318,14 @@ def do_match(template_pic, threshold, device):
     
     # do touchs
     logger.info('Trying finding: '+ template_path)
-    match_list = template_match(screencap_path, template_path, threshold)
+    match_list = _template_match(screencap_path, template_path, threshold)
     if len(match_list) > 0:
         logger.info(r'[matching] {"template":"%s", "screencap":"%s", "exists":"%s", "confidence": "%f"}' % (template_path, screencap_path, r'True', match_list[0][4]))
     else:
         logger.info(r'[matching] {"template":"%s", "screencap":"%s", "exists":"%s",  "confidence": "0.0"}' % (template_path, screencap_path, r'False'))
     return match_list
 
-def template_match(full_pic, template_pic, threshold):
+def _template_match(full_pic, template_pic, threshold):
     if not Path.exists(full_pic):
         raise PictureNotFoundError(r'picture %s not exists' % full_pic)
     if not Path.exists(template_pic):
